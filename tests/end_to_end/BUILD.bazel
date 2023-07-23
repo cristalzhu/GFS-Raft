@@ -1,0 +1,87 @@
+load("@rules_cc//cc:defs.bzl", "cc_binary")
+load("@rules_python//python:defs.bzl", "py_library", "py_test")
+
+cc_binary(
+    name = "file_creation_client",
+    srcs = ["file_creation_client.cc"],
+    deps = [
+        "//src/client:gfs_client",
+        "//src/common:system_logger",
+        "@com_google_absl//absl/flags:flag",
+        "@com_google_absl//absl/flags:parse",
+    ],
+)
+
+py_library(
+    name = "end_to_end_lib",
+    srcs = ["end_to_end_lib.py"],
+)
+
+py_test(
+    name = "file_creation_test",
+    srcs = ["file_creation_test.py"],
+    # For python test, the executables are listed in the data section
+    data = [
+        ":file_creation_client",
+        "//src/server/chunk_server:run_chunk_server_main",
+        "//src/server/master_server:run_master_server_main",
+    ],
+    deps = [":end_to_end_lib"],
+)
+
+py_test(
+    name = "file_creation_retry_test",
+    srcs = ["file_creation_retry_test.py"],
+    data = [
+        "//:gfs_client_main",
+        "//src/server/chunk_server:run_chunk_server_main",
+        "//src/server/master_server:run_master_server_main",
+    ]
+)
+
+cc_binary(
+    name = "file_simple_write_read_client",
+    srcs = ["file_simple_write_read_client.cc"],
+    deps = [
+        "//src/client:gfs_client",
+        "//src/common:system_logger",
+        "@com_google_absl//absl/flags:flag",
+        "@com_google_absl//absl/flags:parse",
+    ],
+)
+
+cc_binary(
+    name = "file_medium_size_write_then_read_client",
+    srcs = ["file_medium_size_write_then_read_client.cc"],
+    deps = [
+        "//src/client:gfs_client",
+        "//src/common:system_logger",
+        "@com_google_absl//absl/flags:flag",
+        "@com_google_absl//absl/flags:parse",
+    ],
+)
+
+py_test(
+    name = "file_simple_write_read_test",
+    timeout = "short",
+    srcs = ["file_simple_write_read_test.py"],
+    data = [
+        ":file_simple_write_read_client",
+        "//src/server/chunk_server:run_chunk_server_main",
+        "//src/server/master_server:run_master_server_main",
+    ],
+    deps = [":end_to_end_lib"],
+)
+
+py_test(
+    name = "file_medium_size_write_then_read_test",
+    srcs = ["file_medium_size_write_then_read_test.py"],
+    data = [
+        ":file_medium_size_write_then_read_client",
+        "//src/server/chunk_server:run_chunk_server_main",
+        "//src/server/master_server:run_master_server_main",
+    ],
+    timeout = "moderate",
+    deps = [":end_to_end_lib"],
+)
+
