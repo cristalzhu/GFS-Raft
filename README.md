@@ -2,14 +2,8 @@
 ![Docker Image Build](https://github.com/Gan-Tu/cppGFS2.0/workflows/Docker%20Image%20CI/badge.svg)
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 
-# cppGFS2.0
-A [distributed Google File System (GFS)](https://research.google/pubs/pub51), implemented in C++
-
-## Demo
-
-* [Presentation Slide](https://docs.google.com/presentation/d/1bQr_XluTRHOCHalKPw1VULvgMpBHS4MAqIj6UrpRQPM/edit?usp=sharing)
-* [Demo Video](https://youtu.be/EX-ELL_43Og)
-* [Our Paper](data/CS244B_Final_Paper.pdf)
+# GFS-Raft
+This is built upon an open-source project [cppGFS2.0](https://github.com/Gan-Tu/cppGFS2.0), a [distributed Google File System (GFS)](https://research.google/pubs/pub51), implemented in C++.
 
 ## Getting Started
 
